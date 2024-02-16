@@ -7,6 +7,7 @@ from .logging import KisLoggable
 from .market import KisMarketClient, KisKStockItem
 from .rtclient import KisRTClient
 from .scope import KisAccountScope, KisStockScope
+from .client.token import KisAccessToken
 
 
 class PyKis(KisLoggable):
@@ -26,6 +27,7 @@ class PyKis(KisLoggable):
         self,
         appkey: str | KisKey,
         appsecret: str | None = None,
+        token: KisAccessToken | None = None,
         virtual_account: bool = False,
         market_database_path: str | None = None,
         market_auto_sync_interval: timedelta = timedelta(days=1),
@@ -55,7 +57,7 @@ class PyKis(KisLoggable):
 
             self.key = KisKey(appkey, appsecret, virtual_account)
 
-        self.client = KisClient(self.key)
+        self.client = KisClient(self.key, token)
         self.market = KisMarketClient(
             client=self.client,
             database_path=market_database_path,

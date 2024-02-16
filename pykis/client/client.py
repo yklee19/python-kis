@@ -37,10 +37,10 @@ class KisClient(KisLoggable):
     _sf_count: list[int]
     _verbose: bool = True
 
-    def __init__(self, appkey: KisKey):
+    def __init__(self, appkey: KisKey, token:KisAccessToken|None ):
         self.key = appkey
         self.session = requests.Session()
-        self.token = None
+        self.token = token
         self._limit_lock = Lock()
         self._sf_count = [0, 0]
         self._sf_time = datetime.now().timestamp()
